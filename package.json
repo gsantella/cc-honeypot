@@ -11,7 +11,8 @@
   "author": "SHSBT",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "kysely": "^0.27.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
