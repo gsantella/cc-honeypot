@@ -1,5 +1,11 @@
 import { db } from '../../db/database.js'
 
+export async function findBirds() {
+  return await db.selectFrom('birds')
+    .selectAll()
+    .execute()
+}
+
 export async function findBirdById(uuid: string) {
   return await db.selectFrom('birds')
     .where('id', '=', uuid)
