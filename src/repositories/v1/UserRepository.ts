@@ -21,7 +21,7 @@ export async function findUserByName(user_name: string) {
   }
 
 export async function deleteUser(id: string) {
-  return await db.deleteFrom('birds').where('id', '=', id)
+  return await db.deleteFrom('users').where('id', '=', id)
     .returningAll()
     .executeTakeFirst()
 }
