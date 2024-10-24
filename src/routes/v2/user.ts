@@ -25,18 +25,19 @@ router.post("/", async (req: Request, res: Response) => {
             res.status(400).json({ error: error.message })
         }
         res.status(500).json({message:"Internal Server Error"})
-        console.error(error)
+        console.error(error) // will never run until our data becomes more complex.
     }
 })
 router.delete("/:uuid", (req: Request, res: Response) => {
     try{    // Deletes user
-        res.json({message: `Created user UserID`})
+        let x = UserRepository.deleteUser(req.params.uuid)
+        res.json({message: x})
     } catch(error) {console.error(error)}
 })
 router.patch("/:uuid", (req: Request, res: Response) => {
     try{    // updates user information
-        res.json({message: `Created user UserID`})
+        
     } catch(error) {console.error(error)}
 })
-  
+
 export default router
