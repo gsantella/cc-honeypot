@@ -4,7 +4,7 @@ import v1 from './routes/v1/router.js'
 import v2 from './routes/v2/router.js'
 
 const app = express()
-const port = 3000
+const port = 3001
 
 // default route
 app.get('/', (req, res) => {

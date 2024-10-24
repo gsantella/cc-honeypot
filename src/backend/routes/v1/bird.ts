@@ -1,5 +1,5 @@
 import express from 'express'
-import * as BirdRepository from '../../repositories/v1/BirdRepository.js'
+import * as BirdRepository from './../../repositories/v1/BirdRepository.js'
 
 const router = express.Router({ mergeParams: true })
 
