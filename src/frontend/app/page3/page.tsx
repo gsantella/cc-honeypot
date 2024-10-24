@@ -5,7 +5,7 @@ export default async function Home() {
   return (
     <ul>
       {birds.map((bird: any) => (
-        <li key={bird.id}>{bird.title}</li>
+        <li key={bird.id}>{bird.name}</li>
       ))}
     </ul>
   )
