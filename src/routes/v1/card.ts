@@ -1,45 +1,49 @@
-/**
- * Express router for handling card-related routes.
- * 
- * @module routes/v1/card
- * @requires express
- */
 import express from 'express';
-const cards = new Map<string, any>();
+import { LithicCardModel } from '../models/LithicCardModel'; // Use path alias
 
 const router = express.Router({ mergeParams: true });
 
 // Get all cards
-router.get('/', (req, res) => {
-    res.json(Array.from(cards.values()));
+router.get('/', async (_, res) => {
+    try {
+        const allCards = await LithicCardModel.getAllCards();
+        res.json(allCards);
+    } catch (error) {
+        const errorMessage = (error as Error).message;
+        res.status(500).json({ message: 'Error fetching cards', error: errorMessage });
+    }
 });
 
 // Get a card by UUID
-router.get('/:uuid', (req, res) => {
-    const card = cards.get(req.params.uuid);
-    if (card) {
+router.get('/:uuid', async (req, res) => {
+    try {
+        const card = await LithicCardModel.getCard(req.params.uuid);
         res.json(card);
-    } else {
-        res.status(404).json({ message: 'Card not found' });
+    } catch (error) {
+        const errorMessage = (error as Error).message;
+        res.status(404).json({ message: 'Card not found', error: errorMessage });
     }
 });
 
 // Create a new card
-router.post('/', (req, res) => {
-    const { uuid, card_num, user_id } = req.body;
-    const newCard = { uuid, card_num, user_id };
-    cards.set(uuid, newCard);
-    res.status(201).json(newCard);
+router.post('/', async (_, res) => {
+    try {
+        const newCard = await LithicCardModel.createCard();
+        res.status(201).json(newCard);
+    } catch (error) {
+        const errorMessage = (error as Error).message;
+        res.status(500).json({ message: 'Error creating card', error: errorMessage });
+    }
 });
 
 // Delete a card by UUID
-router.delete('/:uuid', (req, res) => {
-    const card = cards.get(req.params.uuid);
-    if (card) {
-        cards.delete(req.params.uuid);
+router.delete('/:uuid', async (req, res) => {
+    try {
+        await LithicCardModel.deleteCard(req.params.uuid);
         res.json({ message: 'Card deleted' });
-    } else {
-        res.status(404).json({ message: 'Card not found' });
+    } catch (error) {
+        const errorMessage = (error as Error).message;
+        res.status(500).json({ message: 'Error deleting card', error: errorMessage });
     }
 });
 

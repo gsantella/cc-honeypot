@@ -11,7 +11,8 @@
   "author": "SHSBT",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "lithic": "^0.82.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
