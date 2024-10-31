@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto'
 import { db } from '../../db/database.js'
 import { sql, UpdateResult } from 'kysely'
+
 export async function findUsers() {
   return await db.selectFrom('users')
     .selectAll()
@@ -13,7 +14,6 @@ export async function findUserById(uuid: string) {
     .selectAll()
     .executeTakeFirst()
     if(user){
-      console.log("hi")
       return user
     } else {
       console.log("bye")
@@ -29,20 +29,16 @@ export async function createUser(newUser:NewUser) {
     throw new Error("Invalid argument: newUser must be an object.")
   } // enforce object 
   if (typeof newUser.user_name !== 'string' || newUser.user_name.trim() === '') {
-    throw new Error("Invalid argument: user_name")
+    throw new Error("Invalid argument")
   } // enforce string values for names
-  try{
-    const newUUID = randomUUID() // new UUID)
-    await db.insertInto('users')
-    .values({
-      id: newUUID,
-      user_name: newUser.user_name.trim()
-    })
-    .executeTakeFirst()
-    return await findUserById(newUUID) // returns the whole user
-  } catch(error:any){
-      throw new Error(error)
-  }
+  const newUUID = randomUUID() // new UUID)
+  await db.insertInto('users')
+  .values({
+    id: newUUID,
+    user_name: newUser.user_name.trim()
+  })
+  .executeTakeFirst()
+  return await findUserById(newUUID) // returns the whole user
 }
 
 export async function deleteUser(uuid: string) {
